@@ -1,0 +1,15 @@
+.login-bg-container {
+  background-image: url('../images/login-bg.jpg') !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 40vh;
+  border-radius: 15px;
+  border: 2px solid gray;
+  margin-top: 5px;
+}
+
+.login-form {
+  width: 90%;
+  margin: 0 auto;
+}
