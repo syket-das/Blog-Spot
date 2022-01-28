@@ -10,19 +10,23 @@ router.post(
     if (!email || !password) {
       res.status(400).send('Email and password are required');
     }
-    if (await User.findOne({ email })) {
-      res.status(400).send('Email already exists');
+    const existUser = await User.findOne({ email });
+
+    if (existUser) {
+      res.status(400).json('User already exist');
     }
+
     if (password.length < 6) {
       res.status(400).send('Password must be at least 6 characters');
     }
-
-    try {
-      const user = await User.create({ email, password });
-      await user.generateAuthToken();
-      res.status(201).json(user);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    if (!existUser && password.length >= 6) {
+      try {
+        const user = await User.create({ email, password });
+        await user.generateAuthToken();
+        res.status(201).json(user);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
     }
   })
 );

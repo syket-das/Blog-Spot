@@ -38,21 +38,21 @@ userSchema.methods.toJSON = function () {
   const userObject = user.toObject();
   delete userObject.password;
   delete userObject.tokens;
+  delete userObject.articles;
   return userObject;
 };
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, 'secret123');
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
   user.tokens = user.tokens.concat({ token });
   await user.save();
-  return;
 };
 
 userSchema.statics.findByCredentials = async function (email, password) {
   const user = await User.findOne({ email });
   if (!user) {
-    throw Error('Unable to login');
+    throw new Error('Unable to login');
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {

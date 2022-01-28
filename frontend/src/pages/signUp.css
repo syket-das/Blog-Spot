@@ -19,3 +19,6 @@
   bottom: 5px;
   width: 100%;
 }
+.signUp {
+  min-height: 80vh;
+}

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -10,9 +11,16 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    axios
+      .post('http://localhost:5000/users/login', { email, password })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+
+    setEmail('');
+    setPassword('');
   };
   return (
-    <Container>
+    <Container className="login">
       <Row className="d-flex align-items-center justify-content-center">
         <Col md={5} className="login-bg-container">
           <h2 className="text-light text-center">Welcome Back To Blog Spot</h2>
